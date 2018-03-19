@@ -1,21 +1,19 @@
 
 #ScopeGuard
 
-代码提取自watchman
+代码提取自facebook的watchman项目
 
 [watchman Github](https://github.com/facebook/watchman/)
 
-####  需要VS2015及以后版本
+-
 
---
+###编译
+
+  需要VS2015或者以后版本
+
+-
 ### 用途
 ScopeGuard 用于资源的安全删除。
-
---
-### ScopeGuard的原理介绍
-2000年的一编文章
-[Change the Way You Write Exception-Safe Code]
-(http://www.drdobbs.com/cpp/generic-change-the-way-you-write-excepti/184403758)
 
 --
 ###ScopeGuard用法：
@@ -25,12 +23,23 @@ ScopeGuard 用于资源的安全删除。
 ![ScreenShot](ScreenShot.png)
 
 
+-
+
+MoreInfo
 
 
 
+ *   2000年的一编文章
+ *   [Change the Way You Write Exception-Safe Code]
+(http://www.drdobbs.com/cpp/generic-change-the-way-you-write-excepti/184403758)
 
+ *   Andrei's and Petru Marginean's CUJ article:
+ *     http://drdobbs.com/184403758
 
-
+ *   and the loki library:
+ *     http://loki-lib.sourceforge.net/index.php?n=Idioms.ScopeGuardPointer
+ *   and triendl.kj article:
+ *     http://www.codeproject.com/KB/cpp/scope_guard.aspx
 
 
 

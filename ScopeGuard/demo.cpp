@@ -28,7 +28,7 @@ private:
 	char *buff_;
 };
 
-void ScopeGuardTest()
+void ScopeGuardTest1()
 {
 	char* pData = new char[1000];
 	SCOPE_EXIT{
@@ -43,7 +43,7 @@ void ScopeGuardTest()
 			delete pNew;
 		}
 	};
-	// 故意返回
+	// 模拟一些错误导致的返回
 	std::string  str;
 	if (str.empty()) {
 		return;
@@ -62,9 +62,36 @@ void ScopeGuardTest()
 	}
 }
 
+void ScopeGuardTest2()
+{
+	DataBuf * pNew = new DataBuf;
+	auto guard = watchman::makeGuard([&] {
+		if (pNew)
+		{
+			pNew->DelData();
+			delete pNew;
+			pNew = NULL;
+		}
+	});
+
+	// 模拟一些错误导致的返回
+	std::string  str;
+	if (str.empty()) {
+		return;
+	}
+
+	if (pNew)
+	{
+		pNew->DelData();
+		delete pNew;
+		pNew = NULL;
+	}
+}
+
 int main(int agrc, char** agrv)
 {
-	ScopeGuardTest();
+	ScopeGuardTest1();
+	ScopeGuardTest2();
 	getchar();
 	return 0;
 }

@@ -1,6 +1,13 @@
 
 #ScopeGuard
 
+---
+
+C++ 11 出来后，直接使用智能指针就行了，
+如：std::unique_ptr等。
+
+---
+
 代码提取自facebook的watchman项目
 
 [watchman Github](https://github.com/facebook/watchman/)

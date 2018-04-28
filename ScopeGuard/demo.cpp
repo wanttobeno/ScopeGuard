@@ -1,7 +1,10 @@
 #include "ScopeGuard.h"
 #include <stdio.h>
 #include <string>
+#include <string.h>
+#include <memory>
 #include <iostream>
+#include <Windows.h>   // IsBadReadPtr
 
 class DataBuf
 {
@@ -88,8 +91,52 @@ void ScopeGuardTest2()
 	}
 }
 
+void std_unique_Test1()
+{
+	char* pStr = NULL;
+	{
+		std::unique_ptr<char[]> pStr_unique_ptr = std::unique_ptr<char[]>(new char[1000]);
+		pStr = pStr_unique_ptr.get();
+		memset(pStr_unique_ptr.get(), 0, 1000);
+		const char* pStr1 = "ABC123±±¾©abc";
+		memcpy(pStr_unique_ptr.get(), pStr1, strlen(pStr1));
+		printf("%s\n", pStr_unique_ptr.get());
+	}
+	bool bMemoryOk = IsBadReadPtr(pStr, 1000);
+	if (bMemoryOk)
+	{
+		printf("Ok,Memory No Free\n");
+	}
+	else
+	{
+		printf("BadPtr,Memory Is Free\n");
+	}
+}
+
+void std_unique_Test2()
+{
+	DataBuf* pData = NULL;
+	{
+		std::unique_ptr<DataBuf[]> pData_Unique = std::unique_ptr<DataBuf[]>(new DataBuf[2]);
+		pData = pData_Unique.get();
+	}
+	bool bMemoryOk = IsBadReadPtr(pData, sizeof(DataBuf));
+	if (bMemoryOk)
+	{
+		printf("Ok,Class Memory No Free\n");
+	}
+	else
+	{
+		printf("BadPtr,Class Memory Is Free\n");
+	}
+}
+
 int main(int agrc, char** agrv)
 {
+	std_unique_Test1();
+	std_unique_Test2();
+
+
 	ScopeGuardTest1();
 	ScopeGuardTest2();
 	getchar();

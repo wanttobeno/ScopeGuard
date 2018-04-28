@@ -18,6 +18,10 @@
 #include<exception>		//uncaught_exceptions
 //#include "watchman_preprocessor.h"
 
+#if _MSC_VER <= 1800
+#error No Support VS Version
+#endif
+
 #if defined(__GNUG__) || defined(__clang__)
 #define WATCHMAN_EXCEPTION_COUNT_USE_CXA_GET_GLOBALS
 namespace __cxxabiv1 {
